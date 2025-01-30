@@ -1,6 +1,8 @@
+import { api } from "@/convex/_generated/api";
 import { getConvexClient } from "@/lib/convex";
 import { ChatRequestBody, SSE_DATA_PREFIX, SSE_LINE_DELIMITER, StreamMessage, StreamMessageType } from "@/lib/types";
 import { auth } from "@clerk/nextjs/server";
+import { Content } from "next/font/google";
 import { NextResponse } from "next/server";
 
 function sendSSEMessage(
@@ -43,6 +45,12 @@ export async function POST(req: Request){
             try{
                 //Send intial connection established message
                 await sendSSEMessage(writer, {type: StreamMessageType.Connected})
+
+                //Send user message to convex
+                await convex.mutation(api.messages.send, {
+                    chatId,
+                    content: newMessage
+                });
 
             }catch(e){
                 console.error("Error in chat stream: ", e);
