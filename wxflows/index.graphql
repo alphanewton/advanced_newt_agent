@@ -4,6 +4,11 @@ schema
       "wikipedia/index.graphql"
       "tools.graphql"
       "google_books/index.graphql"
+      "curl/index.graphql"
+      "curl-01/index.graphql"
+      "youtube_transcript/index.graphql"
+      "exchange/index.graphql"
+      "math/index.graphql"
     ]
   ) {
   query: Query
